@@ -12,6 +12,7 @@ plugins {
 
 group = "net.geekmc.turing"
 version = "1.0-SNAPSHOT"
+val outputName = "${project.name}-$version.jar"
 
 application {
     mainClass.set("net.geekmc.turing.TuringServerKt")
@@ -29,16 +30,16 @@ dependencies {
         exclude(group = "org.tinylog")
     }
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.4.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${project.ext["version.kotlinx-coroutines-core"]}")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${project.ext["version.kotlinx-serialization-core"]}")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${project.ext["version.kotlinx-serialization-json"]}")
     // Yaml support for kotlinx-serialization
-    implementation("com.charleskorn.kaml:kaml:0.49.0")
+    implementation("com.charleskorn.kaml:kaml:${project.ext["version.kaml"]}")
 
-    implementation("org.apache.logging.log4j:log4j-core:2.19.0")
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.19.0")
+    implementation("org.apache.logging.log4j:log4j-core:${project.ext["version.log4j-core"]}")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:${project.ext["version.log4j-slf4j-impl"]}")
 
-    implementation("com.github.ajalt.clikt:clikt:3.5.0")
+    implementation("com.github.ajalt.clikt:clikt:${project.ext["version.clikt"]}")
 }
 
 publishing {
@@ -58,6 +59,7 @@ publishing {
 
 tasks.withType<ShadowJar> {
     transform(Log4j2PluginsCacheFileTransformer::class.java)
+    archiveFileName.set(outputName)
 }
 
 tasks.withType<Jar> {
@@ -75,4 +77,8 @@ tasks.withType<Test> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "17"
+}
+
+tasks.withType<Jar> {
+    archiveFileName.set(outputName)
 }
