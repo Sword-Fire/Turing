@@ -59,6 +59,7 @@ publishing {
 
 tasks.withType<ShadowJar> {
     transform(Log4j2PluginsCacheFileTransformer::class.java)
+    mergeServiceFiles()
     archiveFileName.set(outputName)
 }
 
