@@ -70,6 +70,7 @@ tasks.withType<Jar> {
             "Multi-Release" to true
         )
     }
+    archiveFileName.set(outputName)
 }
 
 tasks.withType<Test> {
@@ -78,8 +79,4 @@ tasks.withType<Test> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "17"
-}
-
-tasks.withType<Jar> {
-    archiveFileName.set(outputName)
 }
